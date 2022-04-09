@@ -19,9 +19,12 @@ def index(request):
     context_dict['boldmessage'] = 'Crunchy, creamy, cookie, candy, cupcake!'
     context_dict['categories'] = category_list
     context_dict['pages'] = page_list
+
     visitor_cookie_handler(request)
-    context_dict['visits'] = request.session['visits']
+    #context_dict['visits'] = request.session['visits']
+
     response = render(request, 'rango/index.html', context=context_dict)
+
     return response
 
 def about(request):
@@ -31,13 +34,12 @@ def about(request):
     print(request.user)
 
     #cookies
+    context_dict = {}
     request.session.set_test_cookie()
-    if request.session.test_cookie_worked():
-        print("TEST COOKIE WORKED!")
-        request.session.delete_test_cookie()
+    context_dict['visits'] = request.session['visits']
+    response = render(request, 'rango/about.html', context=context_dict)
 
-
-    return render(request, 'rango/about.html')
+    return response
 
 def show_category(request, category_name_slug):
     # Create a context dictionary which we can pass
@@ -265,4 +267,4 @@ def visitor_cookie_handler(request):
         request.session['last_visit'] = last_visit_cookie
 
 # Update/set the visits cookie
-request.session['visits'] = visits
+    request.session['visits'] = visits
