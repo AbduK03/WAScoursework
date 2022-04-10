@@ -36,7 +36,13 @@ def about(request):
     #cookies
     context_dict = {}
     request.session.set_test_cookie()
+
+
+
+    request.session.get('visits')
+    visitor_cookie_handler(request)
     context_dict['visits'] = request.session['visits']
+
     response = render(request, 'rango/about.html', context=context_dict)
 
     return response
